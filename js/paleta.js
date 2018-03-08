@@ -1,26 +1,67 @@
 const paleta = function(player, color){
-	const p = player
+
 	const c = color
-	const w = 30
-	const h = 200
-	const speed = 8
-	const x = p === 1 ? Math.round(w/2) : width - Math.round(w/2)
-	let y = Math.floor(height/2)
-	let score = 0
+    const w = 30
+    const h = 200
+    const p = player
+    const x = p === 1 ? 0 : width - w
+    const speed = 8
+    const UP = -1
+    const DOWN = 1
+    let y = Math.floor(height / 2)
+    let score = 0
 
-	const draw = function(){
-		rectMode(CENTER)
-		fill(c)
-		noStroke()
-		rect(x,y,w,h)
-	}
+    const getX = function(){
+        return x
+    }
 
-	const move = function(dir){
-		y += (speed * dir)
-	}
-	
-	return{
-		draw,
-		move,
-	}
+    const getY = function(){
+        return y
+    }
+
+    const getW = function(){
+        return w
+    }
+
+    const getH = function(){
+        return h
+    }
+
+    const getScore = function(){
+        return score
+    }
+
+    const draw = function(){
+
+        rectMode(CORNER)
+        noStroke()
+        fill(c)
+        rect(x, y, w, h)
+    }
+
+    const move = function(dir){
+
+        if(edge(dir)){
+            y += (speed * dir)
+        }
+    }
+
+    const edge = function(dir){
+        return (dir === UP && y > 0 || dir === DOWN && y < height - h)
+    }
+
+    const updateScore = function(){
+        score++
+    }
+
+    return {
+        draw,
+        move,
+        getX,
+        getY,
+        getW,
+        getH,
+        getScore,
+        updateScore,
+    }
 }
